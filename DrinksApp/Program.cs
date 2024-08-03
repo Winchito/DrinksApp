@@ -13,6 +13,11 @@ namespace DrinksApp
 
             await DrinkService.GetCategories();
 
+            string userOption = UserInput.GetUserInput();
+
+            Console.WriteLine(userOption);
+
+            await DrinkService.FilterByCategory(userOption);
 
         }
     }

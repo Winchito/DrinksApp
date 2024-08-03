@@ -2,14 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace DrinksApp.Models
 {
-    internal class Drinks
+    internal class DrinkDetails
     {
-        
-        public List<DrinkCategory> drinks { get; set; }
     }
 }

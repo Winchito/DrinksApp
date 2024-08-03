@@ -72,8 +72,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DrinkService.cs" />
+    <Compile Include="Models\CocktailCategory.cs" />
+    <Compile Include="Models\Drink.cs" />
     <Compile Include="Models\DrinkCategory.cs" />
-    <Compile Include="Models\Drinks.cs" />
+    <Compile Include="Models\Cocktail.cs" />
+    <Compile Include="Models\DrinkDetails.cs" />
+    <Compile Include="Models\DrinkDetailsCategory.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserInput.cs" />

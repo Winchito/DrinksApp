@@ -9,9 +9,12 @@ namespace DrinksApp
 {
     internal class UserInput
     {
-        public static void GetUserInput()
+        public static string GetUserInput()
         {
             Console.WriteLine("Select an Category option");
+            string userInput = Console.ReadLine().ToLower().Trim().Replace(' ','_');
+
+            return userInput;
         }
     }
 }

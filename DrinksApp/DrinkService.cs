@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using DrinksApp.Models;
 using System.Text.Json;
@@ -22,33 +19,58 @@ namespace DrinksApp
 
             try
             {
-                HttpResponseMessage response = await client.GetAsync(requestUrl);
-
-                if (response.IsSuccessStatusCode)
+                using(HttpResponseMessage response = await client.GetAsync(requestUrl))
                 {
-                    string responseData = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine("Success");
-                    //Console.WriteLine(responseData);
-
-                    Drinks drinkCategories = JsonSerializer.Deserialize<Drinks>(responseData);
-
-                    foreach (var drink in drinkCategories.drinks)
+                    if (response.IsSuccessStatusCode)
                     {
-                        Console.WriteLine($"Category: {drink.Category}");
+                        string responseData = await response.Content.ReadAsStringAsync();
+                        Console.WriteLine("Success");
+                        //Console.WriteLine(responseData);
+
+                        Cocktail cocktailCategories = JsonSerializer.Deserialize<Cocktail>(responseData);
+
+                        foreach (var cocktail in cocktailCategories.Cocktails)
+                        {
+                            Console.WriteLine(cocktail.Category);
+                        }
                     }
                 }
-                else
-                {
-                    Console.WriteLine("Error!");
-                }
-
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
-
         }
 
+        internal static async Task FilterByCategory(string userInput)
+        {
+            string endPoint = "filter.php?c=";
+
+            string requestUrl = $"{BASEURL}{endPoint}{userInput}";
+
+            try
+            {
+            using (HttpResponseMessage response = await client.GetAsync(requestUrl))
+                {
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string responseData = await response.Content.ReadAsStringAsync();
+                        Console.WriteLine("Success");
+
+                        Drink drinkCategories = JsonSerializer.Deserialize<Drink>(responseData);
+
+                        foreach (var drink in drinkCategories.Drinks)
+                        {
+                            Console.WriteLine($"Id: {drink.Id} | Drink: {drink.Drink}");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                await GetCategories();
+            }
+        }
     }
 }

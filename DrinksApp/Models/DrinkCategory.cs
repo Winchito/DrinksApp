@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
+
 
 namespace DrinksApp.Models
 {
     internal class DrinkCategory
     {
-        [JsonPropertyName("strCategory")]
-        public string Category  { get; set; }
+        [JsonPropertyName("idDrink")]
+        public string Id { get; set; }
+        [JsonPropertyName("strDrink")]
+        public string Drink { get; set; }
     }
 }
