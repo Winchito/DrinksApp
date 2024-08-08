@@ -1,8 +1,13 @@
-# This is a WIP project!
+# Cocktaild DB HttpClient Request Test
 
 
 Its just an App that uses The Cocktail DB API to learn Http Request with C# and get some drinks that are avaiable on the Api
 
+![image](https://github.com/user-attachments/assets/f16293ba-58b9-49a0-ad05-d0bc5fc0983a)
+
+![image](https://github.com/user-attachments/assets/d2ed6a05-4471-4ef4-8306-0fecaa187e82)
+
+![image](https://github.com/user-attachments/assets/2b7825b6-86ba-4ac8-bddf-0a5c12465660)
 
 
 ## Documentation
