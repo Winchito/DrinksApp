@@ -11,17 +11,36 @@ namespace DrinksApp
         static async Task Main(string[] args)
         {
 
-            await DrinkService.GetCategories();
+            bool exit = false;
+            string userOptionForFilter = "";
+            string userOptionForDetails;
 
-            string userOption = UserInput.GetUserInput();
+            while (!exit)
+            {
+                await DrinkService.GetCategories();
 
-            Console.WriteLine(userOption);
+                userOptionForFilter = UserInput.GetUserInput();
 
-            await DrinkService.FilterByCategory(userOption);
+                exit = await DrinkService.FilterByCategory(userOptionForFilter);
+            }
 
-            userOption = UserInput.GetUserInput();
+            exit = false;
 
-            await DrinkService.GetDrinkDetails(userOption);
+            while (!exit)
+            {
+                userOptionForDetails = UserInput.GetUserInput();
+
+                try
+                {
+                    exit = await DrinkService.GetDrinkDetails(userOptionForDetails);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    await DrinkService.FilterByCategory(userOptionForFilter);
+                }
+
+            }
 
         }
     }

@@ -26,7 +26,6 @@ namespace DrinksApp
                     if (response.IsSuccessStatusCode)
                     {
                         string responseData = await response.Content.ReadAsStringAsync();
-                        Console.WriteLine("Success");
                         //Console.WriteLine(responseData);
 
                         Cocktail cocktailCategories = JsonSerializer.Deserialize<Cocktail>(responseData);
@@ -41,23 +40,23 @@ namespace DrinksApp
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                return;
             }
         }
 
-        internal static async Task FilterByCategory(string userInput)
+        internal static async Task<bool> FilterByCategory(string userInput)
         {
             string endPoint = "filter.php?c=";
 
             string requestUrl = $"{BASEURL}{endPoint}{userInput}";
 
-            try
-            {
+          try
+          {
             using (HttpResponseMessage response = await client.GetAsync(requestUrl))
                 {
                     if (response.IsSuccessStatusCode)
                     {
                         string responseData = await response.Content.ReadAsStringAsync();
-                        Console.WriteLine("Success");
 
                         Drink drinkCategories = JsonSerializer.Deserialize<Drink>(responseData);
 
@@ -65,48 +64,42 @@ namespace DrinksApp
                         {
                             Console.WriteLine($"Id: {drink.Id} | Drink: {drink.Drink}");
                         }
+
+                        return true;
                     }
+                    return false;
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                await GetCategories();
-            }
+                return false;
+           }
         }
 
-        internal static async Task GetDrinkDetails(string userInput)
+        internal static async Task<bool> GetDrinkDetails(string userInput)
         {
             string endPoint = "search.php?s=";
 
             string requestUrl = $"{BASEURL}{endPoint}{userInput}";
 
-            try
-            {
                 using (HttpResponseMessage response = await client.GetAsync(requestUrl))
                 {
                     if (response.IsSuccessStatusCode)
                     {
                         string responseData = await response.Content.ReadAsStringAsync();
-                        Console.WriteLine("Success");
 
                         DrinkDetails drinksDetail = JsonSerializer.Deserialize<DrinkDetails>(responseData);
 
-                        //Console.WriteLine(responseData);
-
                         PrintDrinkDetails(drinksDetail);
-                            
+
+                        return true;                     
                         }  
+                    return false;
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                await GetCategories();
-            }
         }
 
-        static void PrintDrinkDetails(DrinkDetails drinkDetails)
+        private static void PrintDrinkDetails(DrinkDetails drinkDetails)
         {
             var properties = typeof(DrinkDetailsCategory).GetProperties();
 
@@ -131,12 +124,9 @@ namespace DrinksApp
                         string ingredient = ingredientProp.GetValue(drink) as string;
                         string measure = measureProp.GetValue(drink) as string;
 
-                        if (!string.IsNullOrEmpty(ingredient))
+                        if (!string.IsNullOrEmpty(ingredient) && !string.IsNullOrEmpty(measure))
                         {
-                            if (!string.IsNullOrEmpty(measure))
-                            {
                                 Console.WriteLine($"{ingredient} - Measure:  {measure}");
-                            }
                         }
                     }
                 }
