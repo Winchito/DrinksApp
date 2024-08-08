@@ -17,10 +17,12 @@ namespace DrinksApp
 
             while (!exit)
             {
+                
                 await DrinkService.GetCategories();
 
                 userOptionForFilter = UserInput.GetUserInput();
 
+                Console.Clear();
                 exit = await DrinkService.FilterByCategory(userOptionForFilter);
             }
 
@@ -36,6 +38,7 @@ namespace DrinksApp
                 }
                 catch (Exception ex)
                 {
+                    Console.Clear();
                     Console.WriteLine(ex.Message);
                     await DrinkService.FilterByCategory(userOptionForFilter);
                 }
